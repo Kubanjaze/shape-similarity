@@ -29,6 +29,23 @@ Outputs: usr_similarity_matrix.csv, usr_heatmap.png, shape_hop_candidates.csv
 - usr_heatmap.png: clustered heatmap sorted by family, colored by USR score
 - shape_hop_candidates.csv: pairs with USR>0.7 + different family (query_compound, hit_compound, usr_score, query_family, hit_family)
 
+## Key Concepts
+- Ultrafast Shape Recognition (USR) algorithm — 12 descriptors per conformer
+- RDKit ETKDGv3 conformer generation + MMFF force field optimization
+- Pairwise USR similarity matrix for scaffold hop detection
+- 3D shape comparison independent of 2D topology
+
+## Verification Checklist
+- [x] 45/45 conformers generated successfully
+- [x] usr_similarity_matrix.csv is a 45x45 symmetric matrix with diagonal = 1.0
+- [x] 228 cross-family shape hop candidates identified at USR >= 0.7
+- [x] Heatmap and shape_hop_candidates.csv saved to output/
+- [x] ind_001_H / bzim_001_H top pair at USR=0.979
+
+## Risks
+- USR is alignment-free but uses a single conformer; flexible molecules may have multiple relevant shapes
+- ETKDGv3 with a single seed may not find the global minimum energy conformer
+
 ## Actual Results (v1.1)
 
 | Family | Mean intra-family USR |
